@@ -1,4 +1,4 @@
-# NutriSnap 🥗
+# B2P (Back 2 Prime) 🥗
 
 Foto makananmu, AI langsung analisis nutrisinya. PWA siap pakai di iPhone.
 

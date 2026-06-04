@@ -1,4 +1,4 @@
-const CACHE = 'b2p-v1';
+const CACHE = 'b2p-v12'
 const ASSETS = [
   '/',
   '/index.html',

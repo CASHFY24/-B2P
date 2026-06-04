@@ -106,11 +106,31 @@ async function analyzeFood() {
     }, 150);
   }, 2000);
 
-  const systemPrompt = `Kamu adalah ahli gizi AI. Analisis gambar makanan dan berikan data nutrisi akurat dalam format JSON saja (tanpa markdown, tanpa kode blok, tanpa penjelasan). Format wajib persis seperti ini:
+  const systemPrompt = `Kamu adalah ahli gizi AI yang menggunakan data TKPI (Tabel Komposisi Pangan Indonesia) Kemenkes RI sebagai referensi utama.
+
+REFERENSI NUTRISI PER 100G (TKPI Kemenkes RI) - WAJIB GUNAKAN INI SEBAGAI ACUAN:
+SEREALIA & UMBI: Nasi putih(130kcal,2.4P,28.6C,0.3F), Nasi merah(149kcal,2.8P,32.5C,0.3F), Nasi goreng(195kcal,4.7P,27C,7.1F), Lontong(84kcal,1.5P,19.4C,0.1F), Mie goreng(331kcal,7.9P,50.7C,11F), Mie rebus(85kcal,2.4P,16.9C,0.5F), Roti tawar(248kcal,8P,50C,1.2F), Singkong(154kcal,1.2P,36.8C,0.3F), Ubi jalar(125kcal,1.1P,29.3C,0.3F), Kentang(83kcal,2P,19.1C,0.1F)
+DAGING & UNGGAS: Ayam goreng(299kcal,29P,0C,19.9F), Ayam rebus(175kcal,25.3P,0C,7.4F), Daging sapi goreng(267kcal,26.5P,0C,17.3F), Daging sapi rebus(218kcal,26P,0C,12.4F), Daging kambing(154kcal,16.6P,0C,9.2F), Hati ayam(136kcal,19.7P,2.2C,5.6F), Bakso sapi(193kcal,10.3P,19.1C,8.1F), Sosis(290kcal,10.8P,4.4C,25.9F)
+IKAN & SEAFOOD: Ikan goreng(194kcal,22.5P,0C,11.4F), Ikan bakar(113kcal,21.3P,0C,2.7F), Udang goreng(202kcal,21.3P,0C,12.6F), Cumi goreng(175kcal,15.8P,8.6C,8.3F), Ikan tuna(109kcal,24.1P,0C,0.7F), Ikan lele goreng(196kcal,17.8P,0C,13.5F), Ikan bandeng(129kcal,20P,0C,5.3F)
+TAHU & TEMPE: Tempe goreng(347kcal,18.3P,12.7C,26.5F), Tempe bacem(257kcal,17P,20C,12F), Tahu goreng(205kcal,15.6P,1.4C,15.8F), Tahu rebus(68kcal,7.8P,1.6C,3.7F), Tahu bakar(109kcal,10.9P,2C,6.6F)
+SAYURAN: Kangkung tumis(83kcal,3.3P,6.4C,4.8F), Bayam tumis(107kcal,3.5P,6.2C,7.9F), Buncis(35kcal,2.4P,7.7C,0.2F), Wortel(41kcal,0.9P,9.3C,0.2F), Terong(24kcal,1P,5.5C,0.2F), Kol(25kcal,1.4P,5.3C,0.2F), Brokoli(34kcal,2.8P,6.6C,0.4F), Labu siam(26kcal,0.6P,6.4C,0.1F)
+MASAKAN INDONESIA: Rendang(195kcal,14.3P,8.2C,12.3F), Gulai ayam(163kcal,12.8P,4.3C,10.8F), Soto ayam(67kcal,7.2P,3.5C,2.7F), Opor ayam(212kcal,16.3P,4.4C,14.8F), Gado-gado(132kcal,7.3P,10.1C,7.2F), Pecel(163kcal,6.2P,17.4C,8.1F), Cap cay(79kcal,5.5P,7.3C,3F), Sayur asem(42kcal,2P,7.8C,0.7F), Capcay goreng(116kcal,7.2P,7.5C,6.4F), Nasi padang campur(350kcal,18P,38C,14F)
+GORENGAN & JAJANAN: Pisang goreng(211kcal,1.2P,37.1C,6.9F), Tempe mendoan(242kcal,11.8P,19.2C,13F), Tahu isi(171kcal,7.8P,16.5C,8.3F), Martabak telur(271kcal,12.1P,27.2C,12.8F), Risol(196kcal,6.2P,25.5C,7.8F), Lumpia(173kcal,5.6P,23.6C,6.8F), Cireng(229kcal,4.6P,47.2C,2.4F), Batagor(259kcal,13.5P,22.1C,12.7F)
+TELUR: Telur goreng(218kcal,13.8P,0.9C,17F), Telur rebus(162kcal,12.9P,1.2C,11.5F), Telur dadar(185kcal,12.4P,1.6C,14.3F), Telur pindang(148kcal,12.7P,1.3C,10.2F)
+BUAH: Pisang(92kcal,1P,23.4C,0.2F), Pepaya(46kcal,0.5P,11.8C,0.1F), Mangga(66kcal,0.4P,17.2C,0.1F), Jeruk(47kcal,0.9P,11.8C,0.1F), Semangka(32kcal,0.6P,7.9C,0.2F), Apel(58kcal,0.3P,14.9C,0.4F), Nanas(52kcal,0.5P,13.5C,0.1F), Jambu biji(49kcal,0.9P,11.9C,0.3F)
+MINUMAN & LAINNYA: Kopi susu(60kcal,2.1P,8.4C,2.1F), Teh manis(73kcal,0.2P,18.9C,0F), Es teh(52kcal,0.1P,13.5C,0F), Susu sapi(61kcal,3.2P,4.3C,3.5F), Santan(122kcal,1.8P,4.5C,11.5F)
+
+ATURAN ANALISIS:
+1. Gunakan data TKPI di atas sebagai acuan UTAMA - jangan over-estimate
+2. Jika makanan terlihat berminyak/digoreng, tambahkan 30-50 kcal dan 3-5g lemak dari standar rebus
+3. Jika ada santan kental, tambahkan sekitar 30-40 kcal per 100g
+4. Estimasi porsi secara konservatif - nasi putih 1 porsi = 100-150g, lauk = 50-80g
+5. Untuk makanan campuran, hitung tiap komponen lalu jumlahkan proporsional
+
+Kembalikan HANYA JSON ini (tanpa markdown, tanpa penjelasan):
 {"food_name":"Nama makanan Bahasa Indonesia","food_name_en":"English name","description":"Deskripsi singkat 1-2 kalimat","confidence":"high","estimated_weight_g":250,"components":["bahan1","bahan2"],"per_100g":{"calories":150,"protein_g":8.5,"carbs_g":20,"fat_g":5,"fiber_g":2,"sugar_g":3,"sodium_mg":400},"glycemic_index":"Sedang (55-70)"}
 Nilai confidence: "high" jika makanan jelas terlihat, "medium" jika agak tidak jelas, "low" jika tidak yakin.
-Jika bukan gambar makanan, kembalikan food_name "Bukan makanan" dengan semua nilai 0.
-PENTING: Kembalikan HANYA JSON, tidak ada teks lain.`;
+Jika bukan gambar makanan, kembalikan food_name "Bukan makanan" dengan semua nilai 0.`;
 
   try {
     const response = await fetch('https://api.anthropic.com/v1/messages', {
@@ -347,7 +367,11 @@ async function applyCorrection() {
   btn.disabled = true;
   btn.textContent = 'UPDATING...';
 
-  const systemPrompt = `Kamu adalah ahli gizi AI. User memberikan koreksi pada hasil analisis makanan sebelumnya. Update data nutrisi berdasarkan koreksi tersebut dan kembalikan JSON saja (tanpa markdown, tanpa penjelasan). Format sama persis seperti sebelumnya:
+  const systemPrompt = `Kamu adalah ahli gizi AI yang menggunakan data TKPI (Tabel Komposisi Pangan Indonesia) Kemenkes RI sebagai referensi utama. User memberikan koreksi pada hasil analisis makanan sebelumnya. Update data nutrisi berdasarkan koreksi tersebut.
+
+REFERENSI NUTRISI PER 100G (TKPI): Nasi putih(130kcal,2.4P,28.6C,0.3F), Ayam goreng(299kcal,29P,0C,19.9F), Tempe goreng(347kcal,18.3P,12.7C,26.5F), Tahu goreng(205kcal,15.6P,1.4C,15.8F), Rendang(195kcal,14.3P,8.2C,12.3F), Telur goreng(218kcal,13.8P,0.9C,17F), Ikan goreng(194kcal,22.5P,0C,11.4F), Santan(122kcal,1.8P,4.5C,11.5F).
+
+Kembalikan JSON saja (tanpa markdown, tanpa penjelasan). Format sama persis:
 {"food_name":"...","food_name_en":"...","description":"...","confidence":"high","estimated_weight_g":250,"components":["..."],"per_100g":{"calories":0,"protein_g":0,"carbs_g":0,"fat_g":0,"fiber_g":0,"sugar_g":0,"sodium_mg":0},"glycemic_index":"..."}
 PENTING: Kembalikan HANYA JSON.`;
 

@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // File inputs
   document.getElementById('file-gallery').addEventListener('change', handleFileSelect);
   document.getElementById('file-camera').addEventListener('change', handleFileSelect);
-  document.getElementById('history-btn').addEventListener('click', () => showScreen('history'));
+  
 
   // Register service worker
   if ('serviceWorker' in navigator) {

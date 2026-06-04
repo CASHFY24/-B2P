@@ -1,0 +1,25 @@
+{
+  "name": "B2P — Back to Prime",
+  "short_name": "B2P",
+  "description": "Back to Prime — analisis nutrisi makananmu dengan AI",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a0a0a",
+  "theme_color": "#E01A1A",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "public/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "public/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["food", "health", "lifestyle"]
+}

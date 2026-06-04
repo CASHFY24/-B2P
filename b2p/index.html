@@ -179,6 +179,16 @@
           <div class="chips" id="chips"></div>
         </div>
 
+        <div class="correction-card" id="correction-card">
+          <p class="section-label">// KOREKSI DETAIL</p>
+          <p class="correction-hint">Ada yang salah? Tambahkan detail atau koreksi di bawah.</p>
+          <textarea id="correction-input" placeholder="cth: tidak pakai santan, tambah tempe goreng 1 potong, nasi sedikit aja..." rows="3"></textarea>
+          <button class="btn-correction" id="btn-correction" onclick="applyCorrection()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+            UPDATE NUTRISI
+          </button>
+        </div>
+
         <div class="detail-card">
           <p class="section-label">// DETAIL DATA</p>
           <div class="detail-row"><span>GULA</span><strong id="val-sugar">—</strong></div>

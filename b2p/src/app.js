@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const apiKey = localStorage.getItem('b2p_key');
   if (!apiKey) {
     showScreen('apikey');hh
-  } else {
+  } else {h
     showScreen('home');
   }
 

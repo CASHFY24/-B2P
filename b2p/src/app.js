@@ -11,8 +11,8 @@ document.addEventListener('DOMContentLoaded', () => {
   loadHistory();
   const apiKey = localStorage.getItem('b2p_key');
   if (!apiKey) {
-    showScreen('apikey');hh
-  } else {h
+    showScreen('apikey');
+  } else {
     showScreen('home');
   }
 
